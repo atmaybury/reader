@@ -1,0 +1,5 @@
+# backend
+/reader-backend/node_modules
+
+# frontend
+/reader-frontend/node_modules

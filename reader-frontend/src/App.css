@@ -1,0 +1,10 @@
+.App {
+}
+
+.container {
+    display: flex;
+}
+
+.side-panel {
+    padding: 10px;
+}
