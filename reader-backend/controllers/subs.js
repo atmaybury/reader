@@ -6,11 +6,9 @@ const convert = require('xml-js')
 /* SET TO /api/subs */
 
 // get all subscriptions
-// TODO convert to async
-subsRouter.get('/', (req, res) => {
-  Sub.find({}).then(result => {
-    res.json(result)
-  })
+subsRouter.get('/', async (req, res) => {
+  const subs = await Sub.find({})
+  res.json(subs)
 })
 
 // get rss feed from subscription source
@@ -23,6 +21,8 @@ subsRouter.get('/*', async (req, res) => {
 
 // add subscription
 subsRouter.post('/', async (req, res) => {
+  console.log(req)
+  /*
   const response = await axios.get(req.body.url)
   const responseJs = convert.xml2js(response.data, { compact: true, spaces: 4 })
   const sub = new Sub({
@@ -31,16 +31,17 @@ subsRouter.post('/', async (req, res) => {
   })
   const savedSub = await sub.save()
   res.status(200).json(savedSub)
+  */
 })
 
 // delete subscription
 subsRouter.delete('/:id', async (req, res) => {
-  const sub = Sub.findById(request.params.id)
+  const sub = Sub.findById(req.params.id)
   if (sub) {
-    await Sub.findOneAndRemove(request.params.id)
-    return response.status(204).end()
+    await Sub.findOneAndRemove(req.params.id)
+    return res.status(204).end()
   } else {
-    return response.status(404).end()
+    return res.status(404).end()
   }
 })
 

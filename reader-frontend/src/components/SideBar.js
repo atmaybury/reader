@@ -23,7 +23,7 @@ const SideBar = (props) => {
   }
 
   // add subscription
-  const subscribe = async (newUrl) => {
+  const subscribe = async newUrl => {
     await subsService.subscribe(newUrl)
     getSubs()
   }

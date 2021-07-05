@@ -20,10 +20,10 @@ const App = () => {
     const items = await subsService.getFeed(sub.url)
     let feed = {
       name: sub.name,
+      id: sub.id,
       items: []
     }
     items.forEach(item => {
-      console.log(item)
       const entry = {
         title: item.title._text || item.title._cdata,
         date: item.pubDate._text,
@@ -44,6 +44,7 @@ const App = () => {
       ? existing
       : await getFeed(sub)
     )
+    console.log(currentSub)
   }
   
   return (
