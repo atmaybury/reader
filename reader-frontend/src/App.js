@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoggedInUser, logout } from './reducers/loginReducer'
 import subsService from './services/subs'
+import LoginForm from './components/LoginForm'
 import SideBar from './components/SideBar'
 import ContentPanel from './components/ContentPanel'
 import './App.css'
@@ -9,10 +12,19 @@ const App = () => {
   const [ currentSub, setCurrentSub ] = useState('')
   const [ feeds, setFeeds ] = useState([])
 
+  const dispatch = useDispatch()
+
+  const user = useSelector(state => state)
+
   // on page load
   useEffect(() => {
+    const loggedInUser = window.localStorage.getItem('loggedInUser')
+    if (loggedInUser) {
+      const loggedInUserJSON = JSON.parse(loggedInUser)
+      dispatch(setLoggedInUser(loggedInUserJSON)) 
+    }
     document.body.style.backgroundColor = 'antiquewhite'
-  }, [])
+  }, [dispatch])
 
   // get rss data and create new feed object
   const getFeed = async sub => {
@@ -46,11 +58,21 @@ const App = () => {
     )
     console.log(currentSub)
   }
-  
+
+  if (!user) {
+    return(
+      <LoginForm />
+    )
+  }
+
   return (
-    <div className='container'>
-      <SideBar displayFeed={displayFeed} />
-      <ContentPanel currentSub={currentSub} />
+    <div>
+      Logged in as {user.name} 
+      <button onClick={() => dispatch(logout())}>logout</button>
+      <div className='main'>
+        <SideBar displayFeed={displayFeed} />
+        <ContentPanel currentSub={currentSub} />
+      </div>
     </div>
     )
 }

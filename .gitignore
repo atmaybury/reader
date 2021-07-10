@@ -3,3 +3,4 @@
 
 # frontend
 /reader-frontend/node_modules
+/reader-frontend/.eslintcache
