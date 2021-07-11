@@ -21,8 +21,7 @@ subsRouter.get('/*', async (req, res) => {
 
 // add subscription
 subsRouter.post('/', async (req, res) => {
-  console.log(req)
-  /*
+  console.log(req.body)
   const response = await axios.get(req.body.url)
   const responseJs = convert.xml2js(response.data, { compact: true, spaces: 4 })
   const sub = new Sub({
@@ -31,7 +30,6 @@ subsRouter.post('/', async (req, res) => {
   })
   const savedSub = await sub.save()
   res.status(200).json(savedSub)
-  */
 })
 
 // delete subscription

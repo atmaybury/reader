@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoggedInUser, logout } from './reducers/loginReducer'
+import { setCurrentSub } from './reducers/currentSubReducer'
 import subsService from './services/subs'
 import LoginForm from './components/LoginForm'
 import SideBar from './components/SideBar'
@@ -14,7 +15,8 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  const user = useSelector(state => state)
+  //const currentSub = useSelector(state => state.currentSub)
+  const user = useSelector(state => state.user)
 
   // on page load
   useEffect(() => {
