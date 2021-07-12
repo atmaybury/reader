@@ -1,30 +1,32 @@
 import React from 'react'
 import ReactHtmlParser from 'react-html-parser'
-import subsService from './../services/subs'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeSub } from './../reducers/subReducer'
 
-const ContentPanel = ({ currentSub }) => {
+const ContentPanel = () => {
+
+  const dispatch = useDispatch()
+  const currentSub = useSelector(state => state.subs.currentSub)
 
   const contentPanelStyle = {
     padding:'10px',
   }
 
-  const unsubscribe = async id => {
-    subsService.unsubscribe(id)
-  }
+  if (!currentSub)
+    return( <h2>No sub selected</h2> )
 
   return(
       <div id="content-panel" style={contentPanelStyle}>
-        <h2>{currentSub.name}</h2>
-          {currentSub && 
-            currentSub.items.map((post, i) => 
-              <>
-                <button onClick={() => {unsubscribe(currentSub.id)}}>Unsubscribe</button>
-                <ul style={{listStyleType: "none"}}>
-                  <li key={i}><h3>{post.title}</h3>{ ReactHtmlParser(post.content) }</li>
-                </ul>
-              </>
-            )
-          }
+        <p>{currentSub.name}</p>
+        <p>{currentSub.id}</p>
+        <button onClick={() => dispatch(removeSub(currentSub.id)) }>Unsubscribe</button>
+        {currentSub.items.map((post, i) => 
+          <>
+            <ul style={{listStyleType: "none"}}>
+              <li key={i}><h3>{post.title}</h3>{ ReactHtmlParser(post.content) }</li>
+            </ul>
+          </>
+        )}
       </div>
   )
 }

@@ -36,7 +36,7 @@ subsRouter.post('/', async (req, res) => {
 subsRouter.delete('/:id', async (req, res) => {
   const sub = Sub.findById(req.params.id)
   if (sub) {
-    await Sub.findOneAndRemove(req.params.id)
+    await Sub.findByIdAndRemove(req.params.id)
     return res.status(204).end()
   } else {
     return res.status(404).end()
