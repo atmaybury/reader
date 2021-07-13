@@ -1,7 +1,9 @@
 const subsRouter = require('express').Router()
-const Sub = require('../models/subscription')
 const axios = require('axios')
 const convert = require('xml-js')
+const parseString = require('xml2js').parseString
+//const parseFeed = require('./../utils/feedParser')
+const Sub = require('../models/subscription')
 
 /* SET TO /api/subs */
 
@@ -15,8 +17,13 @@ subsRouter.get('/', async (req, res) => {
 subsRouter.get('/*', async (req, res) => {
   const url = req.params[0]
   const response = await axios.get(url)
-  const jsResponse = convert.xml2js(response.data, { compact: true, spaces: 4 })
-  res.json(jsResponse)
+  const responseJs = convert.xml2js(response.data, { compact: true, spaces: 4 })
+  console.log(responseJs)
+  let testJs
+  parseString(response.data, (err, result) => testJs = result)
+  console.log(testJs)
+  //const parsedFeed = parseFeed(responseJs)
+  res.json(responseJs)
 })
 
 // add subscription
@@ -24,6 +31,7 @@ subsRouter.post('/', async (req, res) => {
   console.log(req.body)
   const response = await axios.get(req.body.url)
   const responseJs = convert.xml2js(response.data, { compact: true, spaces: 4 })
+
   const sub = new Sub({
     url: req.body.url,
     name: responseJs.rss.channel.title._text

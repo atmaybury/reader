@@ -20,7 +20,7 @@ const ContentPanel = () => {
         <p>{currentSub.name}</p>
         <p>{currentSub.id}</p>
         <button onClick={() => dispatch(removeSub(currentSub.id)) }>Unsubscribe</button>
-        {currentSub.items.map((post, i) => 
+        {currentSub.feed.map((post, i) => 
           <>
             <ul style={{listStyleType: "none"}}>
               <li key={i}><h3>{post.title}</h3>{ ReactHtmlParser(post.content) }</li>
