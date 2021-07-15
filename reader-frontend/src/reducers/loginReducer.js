@@ -1,9 +1,15 @@
 import loginService from './../services/login'
 
+export const setLoggedInUser = user => {
+  return {
+      type: 'STORE_USER',
+      data: user
+  }
+}
+
 export const login = credentials => {
   return async dispatch => {
     const loggedInUser = await loginService.login(credentials)
-    console.log(loggedInUser)
     window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
     dispatch(setLoggedInUser(loggedInUser))
   }
@@ -17,10 +23,13 @@ export const logout = () => {
   }
 }
 
-export const setLoggedInUser = user => {
-  return {
-      type: 'STORE_USER',
-      data: user
+export const checkLoggedInUser = () => {
+  return async dispatch => {
+    const loggedInUser = window.localStorage.getItem('loggedInUser')
+    if (loggedInUser) {
+      const loggedInUserJSON = JSON.parse(loggedInUser)
+      dispatch(setLoggedInUser(loggedInUserJSON)) 
+    }
   }
 }
 

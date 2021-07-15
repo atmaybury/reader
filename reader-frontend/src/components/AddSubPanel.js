@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addNewSub } from './../reducers/subReducer'
 
-const AddSubPanel = ({ subscribe }) => {
+const AddSubPanel = () => {
   const [ newSub, setNewSub ] = useState('')
+
+  const dispatch = useDispatch()
 
   // controlled input handler
   const handleNewSub = event => {
@@ -10,7 +14,7 @@ const AddSubPanel = ({ subscribe }) => {
 
   const addSub = (event) => {
     event.preventDefault()
-    subscribe(newSub)
+    dispatch(addNewSub(newSub))
     setNewSub('')
   }
 

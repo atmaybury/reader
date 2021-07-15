@@ -26,8 +26,17 @@ const userExtractor = async (req, res, next) => {
    res.status(404).json({ error: 'unknown endpoint' })
  }
 
+const errorHandler = (err, req, res, next) => {
+  console.log(err.name)
+  if (err.code === 'ECONNREFUSED') {
+    return res.status(404).json({ error: 'Connection refused, possibly bad URL' })
+  }
+  next(err)
+}
+
 module.exports = {
   tokenExtractor,
   userExtractor,
-  unknownEndpoint
+  unknownEndpoint,
+  errorHandler
 }

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { initSubs } from './../reducers/subReducer'
 import AddSubsPanel from './AddSubPanel'
 import SubsPanel from './SubsPanel'
-import subsService from './../services/subs'
 
-const SideBar = (props) => {
+const SideBar = () => {
   
-  const [ subs, setSubs ] = useState([])
+  const dispatch = useDispatch()
   
   const sideBarStyle = {
     padding: '10px'
@@ -13,25 +14,13 @@ const SideBar = (props) => {
 
   // on page load
   useEffect(() => {
-    getSubs()
-  }, [])
-
-  // update subs from db
-  const getSubs = async () => {
-    const response = await subsService.getAll()
-    setSubs(response)
-  }
-
-  // add subscription
-  const subscribe = async newUrl => {
-    await subsService.subscribe(newUrl)
-    getSubs()
-  }
+    dispatch(initSubs())
+  }, [dispatch])
 
   return(
     <div style={sideBarStyle}>
-      <AddSubsPanel subscribe={subscribe}/>
-      <SubsPanel subs={subs} displayFeed={props.displayFeed}/>
+      <AddSubsPanel />
+      <SubsPanel />
     </div>
   )
 }
