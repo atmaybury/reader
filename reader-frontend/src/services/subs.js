@@ -18,7 +18,7 @@ const unsubscribe = async id => {
 
 const getFeed = async url => {
   const response = await axios.get(`${baseUrl}/${url}`)
-  return response.data.rss.channel.item
+  return response.data
 }
 
 export default { getAll, subscribe, unsubscribe, getFeed }
