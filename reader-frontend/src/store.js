@@ -9,8 +9,18 @@ const reducer = combineReducers({
   subs: subReducer
 })
 
+const rootReducer = (state, action) => {
+  console.log(state)
+  switch(action.type) {
+    case 'USER_LOGOUT':
+      return reducer(undefined, action)
+    default:
+      return reducer(state, action)
+  }
+}
+
 const store = createStore(
-  reducer,
+  rootReducer,
   composeWithDevTools(
     applyMiddleware(thunk)
   ))
