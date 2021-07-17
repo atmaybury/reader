@@ -26,7 +26,7 @@ export const addNewSub = url => {
       })
       dispatch(newFeed(response))
     } catch (err) {
-      console.log(err)
+      console.log(err.response.data.error || err)
     }
   }
 }
