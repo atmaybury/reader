@@ -49,7 +49,7 @@ const LoginForm = () => {
         <input
           id="password-input"
           name="password"
-          type="text"
+          type="password"
           value={loginInputs.password}
           onChange={handleLoginInputs}
         />

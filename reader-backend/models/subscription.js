@@ -13,6 +13,10 @@ const subSchema = new mongoose.Schema({
     required: true,
     unique: true,
     minlength: 3
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 subSchema.plugin(uniqueValidator)

@@ -19,20 +19,15 @@ export const addNewSub = url => {
   return async dispatch => {
     try {
       const response = await subsService.subscribe(url)
+      console.log(response)
       dispatch({
         type: 'NEW_SUB',
         data: response
       })
+      dispatch(newFeed(response))
     } catch (err) {
-      console.log(err.response.data.error)
+      console.log(err)
     }
-    /*
-    const response = await subsService.subscribe(url)
-    dispatch({
-      type: 'NEW_SUB',
-      data: response
-    })
-    */
   }
 }
 
@@ -57,26 +52,21 @@ export const setCurrentSub = sub => {
 export const newFeed = sub => {
   return async dispatch => {
     console.log('getting feed from', sub.name)
-    let feed
     try {
-      feed = await subsService.getFeed(sub.url)
+      const feed = await subsService.getFeed(sub.url)
       const updatedSub = { ...sub, feed: feed }
       dispatch({
         type: 'ADD_FEED',
         sub: updatedSub
       })
+      dispatch({
+        type: 'ADD_FEED',
+        sub: updatedSub
+      })
+      dispatch(setCurrentSub(updatedSub))
     } catch (err) {
       console.log(err)
     }
-    /*
-    //const feed = await subsService.getFeed(sub.url)
-    const updatedSub = { ...sub, feed: feed }
-    dispatch({
-      type: 'ADD_FEED',
-      sub: updatedSub
-    })
-    dispatch(setCurrentSub(updatedSub))
-    */
   }
 }
 

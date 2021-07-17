@@ -1,4 +1,4 @@
-import loginService from './../services/login'
+import loginService from '../services/login'
 
 export const setLoggedInUser = user => {
   return {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLoggedInUser, logout } from './reducers/loginReducer'
+import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import SideBar from './components/SideBar'
 import ContentPanel from './components/ContentPanel'
@@ -20,7 +21,10 @@ const App = () => {
 
   if (!user) {
     return(
-      <LoginForm />
+      <>
+        <RegisterForm />
+        <LoginForm />
+      </>
     )
   }
 

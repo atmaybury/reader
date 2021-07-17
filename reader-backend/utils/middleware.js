@@ -13,7 +13,6 @@ const tokenExtractor = (req, res, next) => {
 const userExtractor = async (req, res, next) => {
   if (req.token) {
     const decodedToken = jwt.decode(req.token, config.JWT_SECRET)
-    console.log(decodedToken)
     if (!decodedToken.id) {
       return response.status('401').json({ error: 'token missing or invalid' })
     }
@@ -29,7 +28,11 @@ const userExtractor = async (req, res, next) => {
 const errorHandler = (err, req, res, next) => {
   console.log(err.name)
   if (err.code === 'ECONNREFUSED') {
-    return res.status(404).json({ error: 'Connection refused, possibly bad URL' })
+    return res.status(404).json({ error: 'connection refused, possibly bad URL' })
+  } else if (err.name === 'CastError') {
+    return res.status(400).json({ error: 'malformatted id' })
+  } else if (err.name === 'ValidationError') {
+    return res.status(400).json({ error: err.message })
   }
   next(err)
 }
