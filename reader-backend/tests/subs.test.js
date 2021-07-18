@@ -28,6 +28,7 @@ describe('when db contains 1 test user', () => {
   // sub post error 400 on no user
 
   // get feed success with working URL
+  // get feed only gets subs for current user
   // get feed error 400 on bad URL
   // get feed error 400 on no user
 
