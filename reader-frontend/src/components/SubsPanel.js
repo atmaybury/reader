@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentSub, newFeed } from './../reducers/subReducer'
+import { initSubs, setCurrentSub, newFeed } from './../reducers/subReducer'
 
 const SubsPanel = () => {
+
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(initSubs())
+  }, [dispatch])
+
   const subs = useSelector(state => state.subs.subs)
 
   const displayFeed = async sub => {

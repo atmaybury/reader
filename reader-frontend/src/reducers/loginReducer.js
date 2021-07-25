@@ -17,9 +17,7 @@ export const login = credentials => {
 
 export const logout = () => {
   return async dispatch => {
-    console.log('logging out')
     window.localStorage.removeItem('loggedInUser')
-    dispatch(setLoggedInUser(null))
     dispatch({ type: 'USER_LOGOUT', action: null })
   }
 }
