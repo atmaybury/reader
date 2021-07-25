@@ -4,3 +4,5 @@
 # frontend
 /reader-frontend/node_modules
 /reader-frontend/.eslintcache
+reader-frontend/package-lock.json
+reader-backend/package-lock.json
