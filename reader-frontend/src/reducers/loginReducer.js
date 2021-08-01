@@ -9,9 +9,13 @@ export const setLoggedInUser = user => {
 
 export const login = credentials => {
   return async dispatch => {
-    const loggedInUser = await loginService.login(credentials)
-    window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
-    dispatch(setLoggedInUser(loggedInUser))
+    try {
+      const loggedInUser = await loginService.login(credentials)
+      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
+      dispatch(setLoggedInUser(loggedInUser))
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
