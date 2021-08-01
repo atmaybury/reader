@@ -16,8 +16,12 @@ subsRouter.get('/', async (req, res) => {
 // get rss feed from subscription source
 subsRouter.get('/*', async (req, res) => {
   const url = req.params[0]
-  const feed = await parser.parseURL(url)
-  res.json(feed.items)
+  try {
+    const feed = await parser.parseURL(url)
+    res.json(feed.items)
+  } catch (err) {
+    res.status(404).json({ error: 'source not available' })
+  }
 })
 
 // add subscription
