@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import AddSubsPanel from './AddSubPanel'
 import SubsPanel from './SubsPanel'
 
