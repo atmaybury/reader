@@ -1,57 +1,40 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from './../reducers/loginReducer'
+import { useField } from '../hooks/index'
+import { Input } from './styles/input.style'
 
 const LoginForm = () => {
 
   const dispatch = useDispatch()
 
-  const [ loginInputs, setLoginInputs ] = useState({
-    username: '',
-    password: ''
-  })
-
-  const handleLoginInputs = e => {
-    setLoginInputs({
-      ...loginInputs,
-      [e.target.name]: e.target.value
-    })
-  }
+  const username = useField('text')
+  const password = useField('text')
 
   const handleLogin = e => {
     e.preventDefault()
     const user = {
-      username: loginInputs.username,
-      password: loginInputs.password
+      username: username.fields.value,
+      password: password.fields.value
     }
     dispatch(login(user))
-    setLoginInputs({
-      username: '',
-      password: ''
-    })
+    username.reset()
+    password.reset()
   }
 
-  return(
+  return (
     <form onSubmit={handleLogin}>
       <h2>Log in</h2>
       <div>
-        Username:
-        <input
-          id="username-input"
-          name="username"
-          type="text"
-          value={loginInputs.username}
-          onChange={handleLoginInputs}
+        <Input
+          { ...username.fields }
+          placeholder="username"
         />
       </div>
       <div>
-        Password:
-        <input
-          id="password-input"
-          name="password"
-          type="password"
-          value={loginInputs.password}
-          onChange={handleLoginInputs}
+        <Input
+          { ...password.fields }
+          placeholder="password"
         />
       </div>
       <button id="login-button" type="submit">Log in</button>

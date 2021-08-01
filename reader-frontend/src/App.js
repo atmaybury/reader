@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLoggedInUser, logout } from './reducers/loginReducer'
-import RegisterForm from './components/RegisterForm'
-import LoginForm from './components/LoginForm'
+import LoginRegisterPanel from './components/LoginRegisterPanel'
 import SideBar from './components/SideBar'
 import ContentPanel from './components/ContentPanel'
 import './App.css'
@@ -16,14 +15,12 @@ const App = () => {
   // on page load
   useEffect(() => {
     dispatch(checkLoggedInUser())
-    document.body.style.backgroundColor = 'antiquewhite'
   }, [dispatch])
 
   if (!user) {
     return(
       <>
-        <RegisterForm />
-        <LoginForm />
+        <LoginRegisterPanel />
       </>
     )
   }

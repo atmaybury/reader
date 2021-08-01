@@ -2,30 +2,23 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '../reducers/loginReducer'
 import userService from '../services/user'
+import { useField } from '../hooks/index'
+import { Input } from './styles/input.style'
 
 const RegisterForm = () => {
 
   const dispatch = useDispatch()
 
-  const [ registerInputs, setRegisterInputs ] = useState({
-    username: '',
-    name: '',
-    password: ''
-  })
-
-  const handleRegisterInputs = e => {
-    setRegisterInputs({
-      ...registerInputs,
-      [e.target.name]: e.target.value
-    })
-  }
+  const username = useField('text')
+  const name = useField('text')
+  const password = useField('password')
 
   const handleRegister = async e => {
     e.preventDefault()
     const user = {
-      username: registerInputs.username,
-      name: registerInputs.name,
-      password: registerInputs.password
+      username: username.fields.value,
+      name: name.fields.value,
+      password: password.fields.value,
     }
     try {
       await userService.register(user)
@@ -33,11 +26,9 @@ const RegisterForm = () => {
     } catch (err) {
       console.log(err.response.data.error)
     } finally {
-      setRegisterInputs({
-        username: '',
-        name: '',
-        password: ''
-      })
+      username.reset()
+      name.reset()
+      password.reset()
     }
   }
 
@@ -45,33 +36,21 @@ const RegisterForm = () => {
     <form onSubmit={handleRegister}>
       <h2>Register</h2>
       <div>
-        Username:
-        <input
-          id="username-input"
-          name="username"
-          type="text"
-          value={registerInputs.username}
-          onChange={handleRegisterInputs}
+        <Input
+          { ...username.fields }
+          placeholder="username"
         />
       </div>
       <div>
-        Name:
-        <input
-          id="name-input"
-          name="name"
-          type="text"
-          value={registerInputs.name}
-          onChange={handleRegisterInputs}
+        <Input
+          { ...name.fields }
+          placeholder="name"
         />
       </div>
       <div>
-        Password:
-        <input
-          id="password-input"
-          name="password"
-          type="password"
-          value={registerInputs.password}
-          onChange={handleRegisterInputs}
+        <Input
+          { ...password.fields }
+          placeholder="password"
         />
       </div>
       <button id="register-button" type="submit">Register</button>
