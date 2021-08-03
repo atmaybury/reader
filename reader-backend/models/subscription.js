@@ -1,17 +1,14 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
 
 const subSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
     minlength: 3
   },
   url: {
     type: String,
     required: true,
-    unique: true,
     minlength: 3
   },
   user: {
@@ -19,7 +16,6 @@ const subSchema = new mongoose.Schema({
     ref: 'User'
   }
 })
-subSchema.plugin(uniqueValidator)
 
 subSchema.set('toJSON', {
   transform: (document, returnedObject) => {
