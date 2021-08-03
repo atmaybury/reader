@@ -1,11 +1,3 @@
-/* COLOURS:
- * #CCDBDC light grey
- * #9AD1D4 powder blue
- * #90CED7 middle blue
- * #007EA7 cg blue
- * #003249 prussian blue
- */
-
 :root {
     --light-grey: #CCDBDC;
     --powder-blue: #9AD1D4;
@@ -17,12 +9,5 @@
 body {
     background-color: var(--powder-blue);
     font-family: 'B612', sans-serif;
-}
-
-.main {
-    display: flex;
-}
-
-.side-panel {
-    padding: 10px;
+    width: 100vw;
 }

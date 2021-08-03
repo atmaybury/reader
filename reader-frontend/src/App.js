@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 import { checkLoggedInUser, logout } from './reducers/loginReducer'
 import LoginRegisterPanel from './components/LoginRegisterPanel'
 import SideBar from './components/SideBar'
 import ContentPanel from './components/ContentPanel'
 import './App.css'
+
+const Main = styled.div`
+  width: 100vw;
+  display: flex;
+`
 
 const App = () => {
 
@@ -19,9 +25,7 @@ const App = () => {
 
   if (!user) {
     return(
-      <>
-        <LoginRegisterPanel />
-      </>
+      <LoginRegisterPanel />
     )
   }
 
@@ -29,10 +33,10 @@ const App = () => {
     <div>
       Logged in as {user.name} 
       <button onClick={() => dispatch(logout())}>logout</button>
-      <div className='main'>
+      <Main>
         <SideBar />
         <ContentPanel />
-      </div>
+      </Main>
     </div>
     )
 }
