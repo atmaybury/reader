@@ -1,6 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { initSubs, setCurrentSub, newFeed } from './../reducers/subReducer'
+import styled from 'styled-components'
+import { initSubs } from './../reducers/subReducer'
+import SubsPanelEntry from './SubsPanelEntry'
+
+const Panel = styled.div`
+  display: flex;
+  flex-direction: column;
+  & > * {
+    margin: 0.25em 0 0.25em 0;
+  }
+`
 
 const SubsPanel = () => {
 
@@ -12,20 +22,12 @@ const SubsPanel = () => {
 
   const subs = useSelector(state => state.subs.subs)
 
-  const displayFeed = async sub => {
-    if (!sub.feed) {
-      dispatch(newFeed(sub))
-    } else {
-      dispatch(setCurrentSub(sub))
-    }
-  }
-
   return(
-    <ul>
+    <Panel>
       {subs.map((sub, i) => 
-        <li key={i}><button onClick={() => {displayFeed(sub)}}>{sub.name}</button></li>
+        <SubsPanelEntry key={i} sub={sub} />
       )}
-    </ul>
+    </Panel>
   )
 }
 
