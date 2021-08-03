@@ -1,28 +1,31 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import { addNewSub } from './../reducers/subReducer'
+import styled from 'styled-components'
+import { addNewSub } from '../reducers/subReducer'
+import { useField } from '../hooks/index'
+
+const AddSubForm = styled.form`
+  & > * {
+    margin: 0.25em 0 0.25em 0;
+  }
+`
 
 const AddSubPanel = () => {
-  const [ newSub, setNewSub ] = useState('')
-
   const dispatch = useDispatch()
 
-  // controlled input handler
-  const handleNewSub = event => {
-    setNewSub(event.target.value)
-  }
+  const newSub = useField('text')
 
   const addSub = (event) => {
     event.preventDefault()
-    dispatch(addNewSub(newSub))
-    setNewSub('')
+    dispatch(addNewSub(newSub.fields.value))
+    newSub.reset()
   }
 
   return(
-    <form onSubmit={addSub} id="subscribe-form">
-      <input value={newSub} onChange={handleNewSub}/>
+    <AddSubForm onSubmit={addSub} id="subscribe-form">
+      <input { ...newSub.fields } />
       <button type="submit">Subscribe</button>
-    </form>
+    </AddSubForm>
   )
 }
 
