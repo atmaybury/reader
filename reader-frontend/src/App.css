@@ -1,5 +1,21 @@
+/* COLOURS:
+ * #CCDBDC light grey
+ * #9AD1D4 powder blue
+ * #90CED7 middle blue
+ * #007EA7 cg blue
+ * #003249 prussian blue
+ */
+
+:root {
+    --light-grey: #CCDBDC;
+    --powder-blue: #9AD1D4;
+    --middle-blue:  #90CED7;
+    --cg-blue: #007EA7;
+    --prussian-blue: #003249;
+}
+
 body {
-    background-color: #FAEBD7;
+    background-color: var(--powder-blue);
     font-family: 'B612', sans-serif;
 }
 
