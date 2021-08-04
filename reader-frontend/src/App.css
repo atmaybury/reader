@@ -6,8 +6,11 @@
     --prussian-blue: #003249;
 }
 
+input {
+    width: 100%;
+}
+
 body {
     background-color: var(--powder-blue);
     font-family: 'B612', sans-serif;
-    width: 100vw;
 }
