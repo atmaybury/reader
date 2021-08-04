@@ -5,6 +5,7 @@ import { removeSub } from './../reducers/subReducer'
 import ContentPanelEntry from './ContentPanelEntry'
 
 const ContentPanelDiv = styled.div`
+  width: 60%;
   padding: 10px;
 `
 
@@ -14,7 +15,11 @@ const ContentPanel = () => {
   const currentSub = useSelector(state => state.subs.currentSub)
 
   if (!currentSub)
-    return( <h2>No sub selected</h2> )
+    return(
+      <ContentPanelDiv>
+        <h2>No sub selected</h2>
+      </ContentPanelDiv>
+    )
 
   return(
       <ContentPanelDiv>

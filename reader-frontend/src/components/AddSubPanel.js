@@ -5,6 +5,7 @@ import { addNewSub } from '../reducers/subReducer'
 import { useField } from '../hooks/index'
 
 const AddSubForm = styled.form`
+  width: 100%;
   & > * {
     margin: 0.25em 0 0.25em 0;
   }
