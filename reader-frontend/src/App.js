@@ -17,7 +17,7 @@ const App = () => {
 
   // redux states
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user.loggedInUser)
 
   // on page load
   useEffect(() => {
@@ -29,7 +29,7 @@ const App = () => {
       <LoginRegisterPanel />
     )
   }
-
+  
   return (
     <div>
       <Header />

@@ -1,23 +1,24 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { login } from './../reducers/loginReducer'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { clearLoginError, login } from './../reducers/loginReducer'
 import { useField } from '../hooks/index'
 import { Input } from './styles/input.style'
 
 const LoginForm = () => {
 
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
 
   const username = useField('text')
   const password = useField('text')
 
   const handleLogin = e => {
     e.preventDefault()
-    const user = {
+    const credentials = {
       username: username.fields.value,
       password: password.fields.value
     }
-    dispatch(login(user))
+    dispatch(login(credentials))
     username.reset()
     password.reset()
   }
@@ -25,6 +26,11 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleLogin}>
       <h2>Log in</h2>
+      {user.error && 
+      <>
+        <p>{user.error}</p><button onClick={() => dispatch(clearLoginError())}>X</button>
+      </>
+      }
       <div>
         <Input
           { ...username.fields }

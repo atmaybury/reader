@@ -1,4 +1,5 @@
 import loginService from '../services/login'
+import store from '../store'
 
 export const setLoggedInUser = user => {
   return {
@@ -12,9 +13,10 @@ export const login = credentials => {
     try {
       const loggedInUser = await loginService.login(credentials)
       window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
-      dispatch(setLoggedInUser(loggedInUser))
-    } catch (err) {
-      console.log(err)
+      dispatch(setLoggedInUser({ loggedInUser: loggedInUser, error: null }))
+    } catch (e) {
+      console.error(e.message)
+      dispatch(setLoggedInUser({ loggedInUser: null, error: e.message }))
     }
   }
 }
@@ -28,18 +30,29 @@ export const logout = () => {
 
 export const checkLoggedInUser = () => {
   return async dispatch => {
-    const loggedInUser = window.localStorage.getItem('loggedInUser')
-    if (loggedInUser) {
-      const loggedInUserJSON = JSON.parse(loggedInUser)
-      dispatch(setLoggedInUser(loggedInUserJSON)) 
+    try {
+      const loggedInUser = window.localStorage.getItem('loggedInUser')
+      if (loggedInUser) {
+        const loggedInUserJSON = JSON.parse(loggedInUser)
+        dispatch(setLoggedInUser({ loggedInUser: loggedInUserJSON, error: null }))
+      }
+    } catch (e) {
+      console.error(e)
+      dispatch(setLoggedInUser({ loggedInUser: null, error: e.message }))
     }
   }
 }
 
-const loginReducer = (state = null, action) => {
+export const clearLoginError = () => ({
+  type: 'CLEAR_ERROR'
+})
+
+const loginReducer = (state = { user: null, error: null }, action) => {
   switch(action.type) {
     case 'STORE_USER':
       return action.data
+    case 'CLEAR_ERROR':
+      return { ...store, error: null }
     default:
       return state
   }

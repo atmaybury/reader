@@ -9,6 +9,7 @@ const parser = new Parser()
 // get all subscriptions
 subsRouter.get('/', async (req, res) => {
   const user = req.user
+  console.log(user)
   const userSubs = await Sub.find({ user: user._id })
   res.json(userSubs)
 })

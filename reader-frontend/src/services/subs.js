@@ -5,7 +5,7 @@ const baseUrl = '/api/subs'
 
 const getToken = async () => {
   const state = store.getState()
-  return `bearer ${state.user.token}`
+  return `bearer ${state.user.loggedInUser.token}`
 }
 
 const getAll = async () => {

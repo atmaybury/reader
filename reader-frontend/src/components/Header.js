@@ -15,7 +15,7 @@ const HeaderDiv = styled.div`
 
 const Header = () => {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user.loggedInUser)
 
   return(
     <HeaderDiv>
