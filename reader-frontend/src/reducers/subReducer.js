@@ -8,11 +8,16 @@ const initialState = {
 
 export const initSubs = () => {
   return async dispatch => {
-    const subs = await subsService.getAll()
-    dispatch({
-      type: 'INIT_SUBS',
-      data: subs
-    })
+    try {
+      const subs = await subsService.getAll()
+      dispatch({
+        type: 'INIT_SUBS',
+        data: subs
+      })
+    } catch (e) {
+      console.error(e)
+      dispatch(addSubError(e.message))
+    }
   }
 }
 
@@ -34,12 +39,17 @@ export const addNewSub = url => {
 
 export const removeSub = id => {
   return async dispatch => {
-    await subsService.unsubscribe(id)
-    dispatch({
-      type: 'REMOVE_SUB',
-      data: id
-    })
-    dispatch(setCurrentSub(null))
+    try {
+      await subsService.unsubscribe(id)
+      dispatch({
+        type: 'REMOVE_SUB',
+        data: id
+      })
+      dispatch(setCurrentSub(null))
+    } catch (e) {
+      console.error(e)
+      dispatch(addSubError(e.message))
+    }
   }
 }
 
@@ -62,7 +72,7 @@ export const newFeed = sub => {
       })
       dispatch(setCurrentSub(updatedSub))
     } catch (e) {
-      console.log(e)
+      console.error(e)
       dispatch(addSubError(e.message))
     }
   }
