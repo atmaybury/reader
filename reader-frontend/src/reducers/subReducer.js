@@ -2,7 +2,8 @@ import subsService from './../services/subs'
 
 const initialState = {
   currentSub: null,
-  subs: []
+  subs: [],
+  errors: null
 }
 
 export const initSubs = () => {
@@ -19,14 +20,14 @@ export const addNewSub = url => {
   return async dispatch => {
     try {
       const response = await subsService.subscribe(url)
-      console.log(response)
       dispatch({
         type: 'NEW_SUB',
         data: response
       })
       dispatch(newFeed(response))
-    } catch (err) {
-      console.log(err.response.data.error || err)
+    } catch (e) {
+      console.error(e)
+      dispatch(addSubError(e.message))
     }
   }
 }
@@ -59,18 +60,24 @@ export const newFeed = sub => {
         type: 'ADD_FEED',
         sub: updatedSub
       })
-      dispatch({
-        type: 'ADD_FEED',
-        sub: updatedSub
-      })
       dispatch(setCurrentSub(updatedSub))
-    } catch (err) {
-      console.log(err)
+    } catch (e) {
+      console.log(e)
+      dispatch(addSubError(e.message))
     }
   }
 }
 
-const currentSubReducer = (state = initialState, action) => {
+export const addSubError = error => ({
+  type: 'ADD_ERROR',
+  error: error
+})
+
+export const removeSubError = () => ({
+  type: 'REMOVE_ERROR'
+})
+
+const subReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'INIT_SUBS':
       return { ...state, subs: action.data }
@@ -82,9 +89,13 @@ const currentSubReducer = (state = initialState, action) => {
       return { ...state, currentSub: action.data }
     case 'ADD_FEED':
       return { ...state, subs: state.subs.map(s => s.id === action.sub.id ? action.sub : s) }
+    case 'ADD_ERROR':
+      return { ...state, error: action.error }
+    case 'REMOVE_ERROR':
+      return { ...state, error: null }
     default:
       return state
   }
 }
 
-export default currentSubReducer
+export default subReducer
