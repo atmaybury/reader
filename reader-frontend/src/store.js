@@ -3,14 +3,15 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import loginReducer from './reducers/loginReducer'
 import subReducer from './reducers/subReducer'
+import errorReducer from './reducers/errorReducer'
 
 const reducer = combineReducers({
   user: loginReducer,
-  subs: subReducer
+  subs: subReducer,
+  errors: errorReducer
 })
 
 const rootReducer = (state, action) => {
-  console.log(state)
   switch(action.type) {
     case 'USER_LOGOUT':
       return reducer(undefined, action)
