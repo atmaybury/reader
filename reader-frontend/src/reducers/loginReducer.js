@@ -1,6 +1,11 @@
 import loginService from '../services/login'
 import store from '../store'
 
+const initialState = {
+  loggedInUser: null,
+  errors: null
+}
+
 export const setLoggedInUser = user => {
   return {
       type: 'STORE_USER',
@@ -44,14 +49,14 @@ export const checkLoggedInUser = () => {
 }
 
 export const clearLoginError = () => ({
-  type: 'CLEAR_ERROR'
+  type: 'CLEAR_LOGIN_ERROR'
 })
 
-const loginReducer = (state = { user: null, error: null }, action) => {
+const loginReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'STORE_USER':
       return action.data
-    case 'CLEAR_ERROR':
+    case 'CLEAR_LOGIN_ERROR':
       return { ...store, error: null }
     default:
       return state
