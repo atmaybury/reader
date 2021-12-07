@@ -10,7 +10,7 @@ const ContentPanelEntry = ({ post }) => {
   const toggleExpanded = () => { setExpanded(!expanded) }
 
   return(
-    <div class="post">
+    <div>
       <h3>{post.title}</h3>
       <button onClick={toggleExpanded}>show</button>
       <div style={showWhenExpanded}>
