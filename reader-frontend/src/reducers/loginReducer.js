@@ -9,7 +9,7 @@ const initialState = {
 export const setLoggedInUser = user => {
   return {
       type: 'STORE_USER',
-      data: user
+      loggedInUser: user
   }
 }
 
@@ -18,10 +18,10 @@ export const login = credentials => {
     try {
       const loggedInUser = await loginService.login(credentials)
       window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
-      dispatch(setLoggedInUser({ loggedInUser: loggedInUser, error: null }))
+      dispatch(setLoggedInUser(loggedInUser))
     } catch (e) {
       console.error(e.message)
-      dispatch(setLoggedInUser({ loggedInUser: null, error: e.message }))
+      dispatch(addLoginError(e.message))
     }
   }
 }
@@ -39,24 +39,31 @@ export const checkLoggedInUser = () => {
       const loggedInUser = window.localStorage.getItem('loggedInUser')
       if (loggedInUser) {
         const loggedInUserJSON = JSON.parse(loggedInUser)
-        dispatch(setLoggedInUser({ loggedInUser: loggedInUserJSON, error: null }))
+        dispatch(setLoggedInUser(loggedInUserJSON))
       }
     } catch (e) {
       console.error(e)
-      dispatch(setLoggedInUser({ loggedInUser: null, error: e.message }))
+      dispatch(addLoginError(e.message))
     }
   }
 }
 
-export const clearLoginError = () => ({
-  type: 'CLEAR_LOGIN_ERROR'
+export const addLoginError = error => ({
+  type: 'ADD_LOGIN_ERROR',
+  error: error
+})
+
+export const removeLoginError = () => ({
+  type: 'REMOVE_LOGIN_ERROR'
 })
 
 const loginReducer = (state = initialState, action) => {
   switch(action.type) {
     case 'STORE_USER':
-      return action.data
-    case 'CLEAR_LOGIN_ERROR':
+      return { ...state, loggedInUser: action.loggedInUser }
+    case 'ADD_LOGIN_ERROR':
+      return { ...state, error: action.error }
+    case 'REMOVE_LOGIN_ERROR':
       return { ...store, error: null }
     default:
       return state
