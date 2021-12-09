@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearLoginError, login } from './../reducers/loginReducer'
+import { removeLoginError, login } from './../reducers/loginReducer'
 import { useField } from '../hooks/index'
 import { Input } from './styles/input.style'
 
@@ -28,7 +28,7 @@ const LoginForm = () => {
       <h2>Log in</h2>
       {user.error && 
       <>
-        <p>{user.error}</p><button onClick={() => dispatch(clearLoginError())}>X</button>
+        <p>{user.error}</p><button onClick={() => dispatch(removeLoginError())}>X</button>
       </>
       }
       <div>
