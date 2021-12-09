@@ -79,12 +79,12 @@ export const newFeed = sub => {
 }
 
 export const addSubError = error => ({
-  type: 'ADD_ERROR',
+  type: 'ADD_SUB_ERROR',
   error: error
 })
 
 export const removeSubError = () => ({
-  type: 'REMOVE_ERROR'
+  type: 'REMOVE_SUB_ERROR'
 })
 
 const subReducer = (state = initialState, action) => {
@@ -99,9 +99,9 @@ const subReducer = (state = initialState, action) => {
       return { ...state, currentSub: action.data }
     case 'ADD_FEED':
       return { ...state, subs: state.subs.map(s => s.id === action.sub.id ? action.sub : s) }
-    case 'ADD_ERROR':
+    case 'ADD_SUB_ERROR':
       return { ...state, error: action.error }
-    case 'REMOVE_ERROR':
+    case 'REMOVE_SUB_ERROR':
       return { ...state, error: null }
     default:
       return state
