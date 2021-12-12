@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { css, jsx } from '@emotion/react'
 import { initSubs } from './../reducers/subReducer'
 import SubsPanelEntry from './SubsPanelEntry'
 
