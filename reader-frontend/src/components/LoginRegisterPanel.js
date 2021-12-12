@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 
-
 const LoginRegisterPanel = () => {
 
   const [ view, setView ] = useState(true)

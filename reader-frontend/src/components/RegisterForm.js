@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { login } from '../reducers/loginReducer'
 import userService from '../services/user'
 import { useField } from '../hooks/index'
-import { Input } from './styles/input.style'
+import { Input, FormDiv } from './common'
 
 const RegisterForm = () => {
 
@@ -35,24 +35,20 @@ const RegisterForm = () => {
   return(
     <form onSubmit={handleRegister}>
       <h2>Register</h2>
-      <div>
+      <FormDiv>
         <Input
           { ...username.fields }
           placeholder="username"
         />
-      </div>
-      <div>
         <Input
           { ...name.fields }
           placeholder="name"
         />
-      </div>
-      <div>
         <Input
           { ...password.fields }
           placeholder="password"
         />
-      </div>
+      </FormDiv>
       <button id="register-button" type="submit">Register</button>
     </form>
   )

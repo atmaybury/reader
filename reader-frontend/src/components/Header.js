@@ -1,17 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { logout } from '../reducers/loginReducer'
-
-const HeaderDiv = styled.div`
-  & > * { 
-    margin: 0.5em;
-  };
-  & > hr {
-    margin-left: 0;
-    margin-right: 0;
-  }
-`
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -25,5 +15,15 @@ const Header = () => {
     </HeaderDiv>
   )
 }
+
+const HeaderDiv = styled.div`
+  & > * { 
+    margin: 0.5em;
+  };
+  & > hr {
+    margin-left: 0;
+    margin-right: 0;
+  }
+`
 
 export default Header

@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeLoginError, login } from './../reducers/loginReducer'
 import { useField } from '../hooks/index'
-import { Input } from './styles/input.style'
+import { Input, FormDiv } from './common'
 
 const LoginForm = () => {
 
@@ -31,18 +31,16 @@ const LoginForm = () => {
         <p>{user.error}</p><button onClick={() => dispatch(removeLoginError())}>X</button>
       </>
       }
-      <div>
+      <FormDiv>
         <Input
           { ...username.fields }
           placeholder="username"
         />
-      </div>
-      <div>
         <Input
           { ...password.fields }
           placeholder="password"
         />
-      </div>
+      </FormDiv>
       <button id="login-button" type="submit">Log in</button>
     </form>
   )

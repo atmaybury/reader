@@ -1,18 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { setCurrentSub, newFeed } from './../reducers/subReducer'
-
-const Entry = styled.div`
-  cursor: pointer;
-  padding: 0.25em;
-  color: var(--light-grey);
-  background-color: var(--prussian-blue);
-  border-radius: 0.5em;
-`
-const SelectedEntry = styled(Entry)`
-  background-color: var(--cg-blue);
-`
 
 const SubsPanelEntry = ({ sub }) => {
   const dispatch = useDispatch()
@@ -36,5 +25,16 @@ const SubsPanelEntry = ({ sub }) => {
     <Entry onClick={() => displayFeed(sub)}>{sub.name}</Entry>
   )
 }
+
+const Entry = styled.div`
+  cursor: pointer;
+  padding: 0.25em;
+  color: var(--light-grey);
+  background-color: var(--prussian-blue);
+  border-radius: 0.5em;
+`
+const SelectedEntry = styled(Entry)`
+  background-color: var(--cg-blue);
+`
 
 export default SubsPanelEntry

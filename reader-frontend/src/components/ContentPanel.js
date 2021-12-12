@@ -1,13 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import styled from 'styled-components'
+import styled from "@emotion/styled"
 import { removeSub } from './../reducers/subReducer'
 import ContentPanelEntry from './ContentPanelEntry'
-
-const ContentPanelDiv = styled.div`
-  width: 60%;
-  padding: 10px;
-`
 
 const ContentPanel = () => {
 
@@ -31,5 +26,10 @@ const ContentPanel = () => {
       </ContentPanelDiv>
   )
 }
+
+const ContentPanelDiv = styled.div`
+  width: 60%;
+  padding: 10px;
+`
 
 export default ContentPanel

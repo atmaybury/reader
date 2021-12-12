@@ -1,17 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { checkLoggedInUser } from './reducers/loginReducer'
 import LoginRegisterPanel from './components/LoginRegisterPanel'
 import Header from './components/Header'
 import SideBar from './components/SideBar'
 import ContentPanel from './components/ContentPanel'
 import './App.css'
-
-const Main = styled.div`
-  width: 100%;
-  display: flex;
-`
 
 const App = () => {
 
@@ -40,5 +35,10 @@ const App = () => {
     </div>
     )
 }
+
+const Main = styled.div`
+  width: 100%;
+  display: flex;
+`
 
 export default App;

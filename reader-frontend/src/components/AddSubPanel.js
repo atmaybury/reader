@@ -1,15 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
 import { addNewSub } from '../reducers/subReducer'
 import { useField } from '../hooks/index'
 
-const AddSubForm = styled.form`
-  width: 100%;
-  & > * {
-    margin: 0.25em 0 0.25em 0;
-  }
-`
+import styled from '@emotion/styled'
 
 const AddSubPanel = () => {
   const dispatch = useDispatch()
@@ -30,4 +24,10 @@ const AddSubPanel = () => {
   )
 }
 
+const AddSubForm = styled.form`
+  width: 100%;
+  & > * {
+    margin: 0.25em 0 0.25em 0;
+  }
+`
 export default AddSubPanel
