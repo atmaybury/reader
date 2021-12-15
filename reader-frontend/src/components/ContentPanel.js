@@ -3,24 +3,27 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from "@emotion/styled"
 import { removeSub } from './../reducers/subReducer'
 import ContentPanelEntry from './ContentPanelEntry'
+import LoadingDots from './common/LoadingDots'
 
 const ContentPanel = () => {
 
   const dispatch = useDispatch()
-  const currentSub = useSelector(state => state.subs.currentSub)
+  const subs = useSelector(state => state.subs)
 
-  if (!currentSub)
+  if (!subs.currentSub && !subs.feedLoading) return <h1>No feed selected</h1>
+
+  if (subs.feedLoading)
     return(
       <ContentPanelDiv>
-        <h2>No sub selected</h2>
+        <LoadingDots />
       </ContentPanelDiv>
     )
 
   return(
       <ContentPanelDiv>
-        {currentSub.name}
-        <button onClick={() => dispatch(removeSub(currentSub.id)) }>Unsubscribe</button>
-        {currentSub.feed.map((post, i) => 
+        {subs.currentSub.name}
+        <button onClick={() => dispatch(removeSub(subs.currentSub.id)) }>Unsubscribe</button>
+        {subs.currentSub.feed.map((post, i) => 
           <ContentPanelEntry key={i} post={post} />
         )}
       </ContentPanelDiv>
