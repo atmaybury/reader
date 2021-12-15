@@ -2,12 +2,15 @@ import subsService from './../services/subs'
 
 const initialState = {
   currentSub: null,
+  subsLoading: false,
+  feedLoading: false,
   subs: [],
   errors: null
 }
 
 export const initSubs = () => {
   return async dispatch => {
+    dispatch(setSubsLoading(true))
     try {
       const subs = await subsService.getAll()
       dispatch({
@@ -17,6 +20,8 @@ export const initSubs = () => {
     } catch (e) {
       console.error(e)
       dispatch(addSubError(e.message))
+    } finally {
+      dispatch(setSubsLoading(false))
     }
   }
 }
@@ -63,6 +68,7 @@ export const setCurrentSub = sub => {
 export const newFeed = sub => {
   return async dispatch => {
     console.log('getting feed from', sub.name)
+    dispatch(setFeedLoading(true))
     try {
       const feed = await subsService.getFeed(sub.url)
       const updatedSub = { ...sub, feed: feed }
@@ -74,9 +80,21 @@ export const newFeed = sub => {
     } catch (e) {
       console.error(e)
       dispatch(addSubError(e.message))
+    } finally {
+      dispatch(setFeedLoading(false))
     }
   }
 }
+
+export const setSubsLoading = bool => ({
+  type: 'SET_SUBS_LOADING',
+  bool: bool
+})
+
+export const setFeedLoading = bool => ({
+  type: 'SET_FEED_LOADING',
+  bool: bool
+})
 
 export const addSubError = error => ({
   type: 'ADD_SUB_ERROR',
@@ -103,6 +121,10 @@ const subReducer = (state = initialState, action) => {
       return { ...state, error: action.error }
     case 'REMOVE_SUB_ERROR':
       return { ...state, error: null }
+    case 'SET_SUBS_LOADING':
+      return { ...state, subsLoading: action.bool }
+    case 'SET_FEED_LOADING':
+      return { ...state, feedLoading: action.bool }
     default:
       return state
   }
