@@ -1,8 +1,12 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import styled from '@emotion/styled'
+
 import { initSubs } from './../reducers/subReducer'
+
 import SubsPanelEntry from './SubsPanelEntry'
+import LoadingDots from '../components/common/LoadingDots'
 
 const SubsPanel = () => {
 
@@ -12,11 +16,23 @@ const SubsPanel = () => {
     dispatch(initSubs())
   }, [dispatch])
 
-  const subs = useSelector(state => state.subs.subs)
+  const subs = useSelector(state => state.subs)
+
+  if (!subs) return 
+    <Panel>
+      <h3>No subscriptions</h3>
+    </Panel>
+
+  if (subs.subsLoading)
+    return(
+      <Panel>
+        <LoadingDots />
+      </Panel>
+    )
 
   return(
     <Panel>
-      {subs.map((sub, i) => 
+      {subs.subs.map((sub, i) => 
         <SubsPanelEntry key={i} sub={sub} />
       )}
     </Panel>
